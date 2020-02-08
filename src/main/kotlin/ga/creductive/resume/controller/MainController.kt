@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 class MainController {
 
 
-    @GetMapping("main")
+    @GetMapping
     fun main(): String {
         return "main"
     }

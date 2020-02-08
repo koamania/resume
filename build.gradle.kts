@@ -31,6 +31,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     implementation("com.atlassian.commonmark:commonmark:0.14.0")
+    implementation("com.github.spullara.mustache.java:compiler:0.9.6")
     
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("com.h2database:h2")
