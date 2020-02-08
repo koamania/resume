@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.view.InternalResourceViewResolver
 
 @Configuration
-class WebConfiguration {
+class ViewResolverSupport {
 
     @Value("\${spring.mvc.view.prefix}")
     var prefix: String = ""

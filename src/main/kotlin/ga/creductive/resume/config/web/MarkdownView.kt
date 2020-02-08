@@ -1,38 +1,30 @@
 package ga.creductive.resume.config.web
 
-import com.github.mustachejava.DefaultMustacheFactory
-import com.github.mustachejava.Mustache
-import com.github.mustachejava.MustacheFactory
+import ga.creductive.resume.view.TemplateRenderer
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
 import org.springframework.core.io.ClassPathResource
+import org.springframework.stereotype.Component
 import org.springframework.util.FileCopyUtils
 import org.springframework.web.servlet.view.InternalResourceView
 import java.io.IOException
-import java.io.StringReader
-import java.io.StringWriter
-import java.nio.file.Path
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-
 
 class MarkdownView : InternalResourceView() {
 
     private val parser = Parser.builder().build()
-    private var renderer = HtmlRenderer.builder().build()
+    private val renderer = HtmlRenderer.builder().build()
+    // 의존성 오지게 박습니다 행님. TODO View Resolver 자체를 바꿔볼 생각을 한번 해보자
+    private val templateRenderer: TemplateRenderer = TemplateRenderer.MustacheTemplateRenderer()
 
     override fun render(model: MutableMap<String, *>?, request: HttpServletRequest, response: HttpServletResponse) {
         val resource = super.getUrl()?.let { ClassPathResource(it) }
                 ?: throw IOException("not found page")
 
-        val document = parser.parseReader(resource.inputStream.reader())
-        val renderedDocument = renderer.render(document)
-
-
-        val mustacheFactory: MustacheFactory = DefaultMustacheFactory()
-        val m: Mustache = mustacheFactory.compile(ClassPathResource("/static/default_template.html").inputStream.reader(), "resume-page")
-        val writer = StringWriter()
-        m.execute(writer, renderedDocument)
+        val markdown = parser.parseReader(resource.inputStream.reader())
+        val renderedMarkdown = renderer.render(markdown)
+        val renderedDocument = templateRenderer.render(mapOf("resume_body" to renderedMarkdown))
 
         FileCopyUtils.copy(renderedDocument.byteInputStream(), response.outputStream)
     }
