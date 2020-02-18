@@ -23,8 +23,6 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -34,8 +32,9 @@ dependencies {
     implementation("com.github.spullara.mustache.java:compiler:0.9.6")
     
     compileOnly("org.projectlombok:lombok")
-    runtimeOnly("com.h2database:h2")
+    
     annotationProcessor("org.projectlombok:lombok")
+    
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }

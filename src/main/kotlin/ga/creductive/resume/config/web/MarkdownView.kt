@@ -4,7 +4,6 @@ import ga.creductive.resume.view.TemplateRenderer
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
 import org.springframework.core.io.ClassPathResource
-import org.springframework.stereotype.Component
 import org.springframework.util.FileCopyUtils
 import org.springframework.web.servlet.view.InternalResourceView
 import java.io.IOException
